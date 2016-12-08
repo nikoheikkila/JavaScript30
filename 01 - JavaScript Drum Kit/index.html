@@ -6,8 +6,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -59,25 +57,44 @@
 
 <script>
 
+    /**
+     * Play the sound file corresponding to each key pressed
+     * @param Event e
+     * @return void
+     */
+    let playSound = function (e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key   = document.querySelector(`.key[data-key="${e.keyCode}"]`);
 
-  function playSound(e) {
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-    if (!audio) return; // stop the fucntion from running all together
-    audio.currentTime = 0; // rewind to the start
-    audio.play();
-    key.classList.add('playing');
-  }
-  function removeTransition(e) {
-    if (e.propertyName !== 'transform') return; // skip it if it's not a transform
-    this.classList.remove('playing');
-  }
+        /* If an unknown key was pressed */
+        if (!audio) return;
 
-  const keys = document.querySelectorAll('.key');
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-  window.addEventListener('keydown', playSound);
+        audio.currentTime = 0;  // Repeating sounds
+        audio.play();           // Playing the sound
+
+        /* Add a nice transition effect while the sound is playing */
+        key.classList.add('playing');
+    }
+
+    /**
+     * Remove the effect when the transition has ended
+     * @param Event e
+     * @return void
+     */
+    let removeTransition = function (e) {
+        if (e.propertyName !== 'transform') return;
+        this.classList.remove('playing');
+    }
+
+    /* Event listener for keypresses */
+    window.addEventListener('keydown', playSound);
+
+    /* Loop through all the keys adding an event listener for ending transitions to each one */
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
 </script>
+
 
 </body>
 </html>
