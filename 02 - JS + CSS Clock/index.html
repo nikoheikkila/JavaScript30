@@ -1,135 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
 </head>
+
 <body>
 
 
     <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-      </div>
+        <div class="clock-face">
+            <div class="hand hour-hand"></div>
+            <div class="hand min-hand"></div>
+            <div class="hand second-hand"></div>
+        </div>
     </div>
 
     <audio class="tick" src="tick.wav"></audio>
 
-  <style>
-    html {
-      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
-      background-size: cover;
-      font-family: 'helvetica neue';
-      text-align: center;
-      font-size: 10px;
-    }
-
-    body {
-      font-size: 2rem;
-      display: flex;
-      flex: 1;
-      min-height: 100vh;
-      align-items: center;
-    }
-
-    .clock {
-      width: 30rem;
-      height: 30rem;
-      border: 20px solid white;
-      border-radius: 50%;
-      margin: 50px auto;
-      position: relative;
-      padding: 2rem;
-      box-shadow:
-        0 0 0px 4px rgba(0,0,0,0.1),
-        inset 0 0 0 3px #EFEFEF,
-        inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
-    }
-
-    .clock-face {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
-    }
-
-    .hand {
-      width: 50%;
-      height: 6px;
-      background: black;
-      position: absolute;
-      top: 50%;
-      transform-origin: 100%;
-      transform: rotate(90deg);
-      transition: all 0.05s;
-      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
-    }
-
-    .second-hand {
-        background-color: yellow;
-    }
-
-    .hour-hand {
-        height: 8px;
-    }
-  </style>
-
-  <script>
-    const oneSecondInMilliseconds = 1000;
-    const secondsInMinute = minutesInHour = 60;
-    const hoursInClock = 12;
-    const fullCircle = 360;
-    const defaultOffset = 90;
-
-    /* Clock hand elements */
-    const secondHand = document.querySelector('.second-hand');
-    const minuteHand = document.querySelector('.min-hand');
-    const hourHand   = document.querySelector('.hour-hand');
-
-    /* Clock ticking */
-    const audio = document.querySelector('.tick');
-
-    let setDate = function() {
-
-        /* Get current date */
-        const now = new Date();
-
-        const seconds = now.getSeconds();
-        const minutes = now.getMinutes();
-        const hours   = now.getHours();
-
-        /* Calculate the degree value of time components */
-        const secondsDegrees = ((seconds / secondsInMinute) * fullCircle) + defaultOffset;
-        const minutesDegrees = ((minutes / minutesInHour) * fullCircle) + defaultOffset;
-        const hoursDegrees   = ((hours / hoursInClock) * fullCircle) + defaultOffset;
-
-        /* Prevent the hands rotating backwards when they have gone full circle */
-        if (secondsDegrees === fullCircle) {
-            secondHand.style.transition = 'none';
+    <style>
+        html {
+            background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
+            background-size: cover;
+            font-family: 'helvetica neue';
+            text-align: center;
+            font-size: 10px;
         }
 
-        if (minutesDegrees === fullCircle) {
-            minuteHand.style.transition = 'none';
+        body {
+            font-size: 2rem;
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            align-items: center;
         }
 
-        if (hoursDegrees === fullCircle) {
-            hourHand.style.transition = 'none';
+        .clock {
+            width: 30rem;
+            height: 30rem;
+            border: 20px solid white;
+            border-radius: 50%;
+            margin: 50px auto;
+            position: relative;
+            padding: 2rem;
+            box-shadow: 0 0 0px 4px rgba(0, 0, 0, 0.1), inset 0 0 0 3px #EFEFEF, inset 0 0 10px black, 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .clock-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: translateY(-3px);
+            /* account for the height of the clock hands */
         }
 
-        audio.currentTime = 0;
-        audio.play();
+        .hand {
+            width: 50%;
+            height: 6px;
+            background: black;
+            position: absolute;
+            top: 50%;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            transition: all 0.05s;
+            transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+        }
 
-        /* Move the clock hands */
-        secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
-        minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
-        hourHand.style.transform   = `rotate(${hoursDegrees}deg)`;
-    }
+        .second-hand {
+            background-color: yellow;
+        }
 
-    /* Repeat setDate() every second */
-    setInterval(setDate, oneSecondInMilliseconds);
-  </script>
+        .hour-hand {
+            height: 8px;
+        }
+    </style>
+
+    <script>
+        const oneSecondInMilliseconds = 1000;
+        const secondsInMinute = minutesInHour = 60;
+        const hoursInClock = 12;
+        const fullCircle = 360;
+        const defaultOffset = 90;
+
+        /* Clock hand elements */
+        const secondHand = document.querySelector('.second-hand');
+        const minuteHand = document.querySelector('.min-hand');
+        const hourHand = document.querySelector('.hour-hand');
+
+        /* Clock ticking */
+        const audio = document.querySelector('.tick');
+
+        let setDate = function() {
+
+            /* Get current date */
+            const now = new Date();
+
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            /* Calculate the degree value of time components */
+            const secondsDegrees = ((seconds / secondsInMinute) * fullCircle) + defaultOffset;
+            const minutesDegrees = ((minutes / minutesInHour) * fullCircle) + defaultOffset;
+            const hoursDegrees = ((hours / hoursInClock) * fullCircle) + defaultOffset;
+
+            /* Prevent the hands rotating backwards when they have gone full circle */
+            if (secondsDegrees === fullCircle) {
+                secondHand.style.transition = 'none';
+            }
+
+            if (minutesDegrees === fullCircle) {
+                minuteHand.style.transition = 'none';
+            }
+
+            if (hoursDegrees === fullCircle) {
+                hourHand.style.transition = 'none';
+            }
+
+            audio.currentTime = 0;
+            audio.play();
+
+            /* Move the clock hands */
+            secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+            minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+            hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+        }
+
+        /* Repeat setDate() every second */
+        setInterval(setDate, oneSecondInMilliseconds);
+    </script>
 </body>
+
 </html>
