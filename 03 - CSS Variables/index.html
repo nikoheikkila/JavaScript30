@@ -21,25 +21,24 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+
+    /* Declare CSS variables and their default values */
     :root {
-      --base: #ffc600;
-      --spacing: 10px;
-      --blur: 10px;
+        --base: #FFC600;
+        --spacing: 50px;
+        --blur: 10px;
     }
 
     img {
-      padding: var(--spacing);
-      background: var(--base);
-      filter: blur(var(--blur));
+        /* Reference the above variables with var() */
+        padding: var(--spacing);
+        background: var(--base);
+        filter: blur(var(--blur));
     }
 
     .hl {
-      color: var(--base);
+        color: var(--base);
     }
-
-    /*
-      misc styles, nothing to do with CSS variables
-    */
 
     body {
       text-align: center;
@@ -69,16 +68,21 @@
 
   <script>
     const inputs = document.querySelectorAll('.controls input');
+    const image  = document.querySelector('img');
 
-    function handleUpdate() {
-      const suffix = this.dataset.sizing || '';
-      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    let handleUpdate = function() {
+
+        /* Default suffix is 'px', fallback to an empty string */
+        const suffix = this.dataset.sizing || '';
+
+        /* Update image style properties */
+        image.style.setProperty(`--${this.name}`, this.value + suffix);
     }
 
+    /* Add event listeners for controls */
     inputs.forEach(input => input.addEventListener('change', handleUpdate));
     inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
   </script>
-
 
 </body>
 </html>
